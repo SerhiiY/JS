@@ -1,20 +1,27 @@
-// Task 2
-const users = ["Mango", "Poly", "Ajax", "Chelsey"];
+const str = String(prompt('Enter the sentense'));
 
-console.log(users);
+function formatString (string) {
+  if(string.length <= 40){
+    return string;
+  }else{
+    return string.slice(0, 40);
+  }
+}
 
-console.log(users.shift()); // удаляем 1 элемент массива
+console.log(formatString(str));
 
-console.log(users);
+console.log(
+  formatString("Curabitur ligula sapien, tincidunt non.")
+); // вернется оригинальная строка
 
-console.log(users.pop()); // удаляем последний элемент массива
+console.log(
+  formatString("Vestibulum facilisis, purus nec pulvinar iaculis.")
+); // вернется форматированная строка
 
-console.log(users);
+console.log(
+  formatString("Curabitur ligula sapien.")
+); // вернется оригинальная строка
 
-console.log(users.unshift('name')); // добавляем 1 элемент массива
-
-console.log(users);
-
-console.log(users.push('name 1', 'name 2')); // добавляем последние элементы массива
-
-console.log(users);
+console.log(
+  formatString("Nunc sed turpis. Curabitur a felis in nunc fringilla tristique.")
+); // вернется форматированная строка

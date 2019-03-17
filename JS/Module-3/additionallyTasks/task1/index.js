@@ -1,8 +1,15 @@
-// Task 1
-const users = ['Mango', 'Poly', 'Ajax', 'Chelsey'];
-
-console.log(users.length); // Выводим количество элементов массива
-
-for(let i = 0; i < users.length; i++) {
-  console.log(users[i]); // С помощью цикла выводим каждый элемент массива
+function checkNumberType(number) {
+  if(number % 2 === 0){
+    return "Even";
+  }else{
+    return "Odd";
+  }
 }
+
+console.log( checkNumberType(2) ); // 'Even'
+
+console.log( checkNumberType(46) ); // 'Even'
+
+console.log( checkNumberType(3) ); // 'Odd'
+
+console.log( checkNumberType(17) ); // 'Odd'
