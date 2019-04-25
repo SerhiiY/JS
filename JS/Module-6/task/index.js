@@ -50,7 +50,7 @@ class Hamburger {
 
   removeTopping(topping) {
     if(this._toppings.indexOf(topping) !== -1){
-      this._toppings.splice(this._toppings.indexOf(topping), 1);
+      this._toppings = this._toppings.filter(el => el !== topping);
     }
   }
    get toppings () {
