@@ -1,7 +1,58 @@
-let fullview = document.querySelector('.fullview'),
-    preview = document.querySelector('.preview'),
-    modalContent = document.querySelector('.modal-content'),
-    modal = document.querySelector('.js-modal-backdrop');
+class Gallery {
+  constructor({items, parentNode, defaultActiveItem = 1}){
+    this.items = items;
+    this.parentNode = parentNode.cloneNode(true);
+    this.defaultActiveItem = defaultActiveItem;
+    this.fullview = this.parentNode.querySelector('.fullview');
+    this.preview = this.parentNode.querySelector('.preview');
+    this.modalContent = this.parentNode.querySelector('.modal-content');
+    this.modal = this.parentNode.querySelector('.js-modal-backdrop');
+
+    this.preview.innerHTML = this.items.reduce((acc, el) => acc + `<li><img src=${el.preview} data-fullview=${el.fullview} alt=${el.alt}></li>`, '');
+    this.fullview.innerHTML = this.items.reduce((acc, el) => acc + `<li class="hidden"><img src=${el.fullview} alt=${el.alt}></li>`, '');
+    this.modalContent.innerHTML = this.items.reduce((acc, el) => acc + `<li class="hidden"><img src=${el.fullview} alt=${el.alt}></li>`, '');
+
+    this.fullview.children[this.defaultActiveItem - 1].classList.add('active');
+    this.modalContent.children[this.defaultActiveItem - 1].classList.add('active');
+
+    this.setActiveImg = function(targetPreviewImg){
+      let currentActiveImg = this.fullview.querySelector('.active');
+      currentActiveImg.classList.remove('active');
+
+      let nextActiveImg = this.fullview.querySelector(`[src="${targetPreviewImg.dataset.fullview}"]`);
+      nextActiveImg.parentNode.classList.add('active');
+
+      let currentActiveModal = this.modalContent.querySelector('.active');
+      currentActiveModal.classList.remove('active');
+
+      let nextActiveModal = this.modalContent.querySelector(`[src="${targetPreviewImg.dataset.fullview}"]`);
+      nextActiveModal.parentNode.classList.add('active');
+    };
+
+    this.toFullview = function(event) {
+      event.preventDefault();
+      const target = event.target;
+      if(target.nodeName !== "LI" && target.nodeName !== "IMG") return;
+      this.setActiveImg(target);
+    };
+
+    this.openModal = function() {
+      this.modal.classList.remove('modal-hidden');
+    };
+
+    this.closeModal = function() {
+      // const target = event.target;
+      // if(target !== modal) return;
+      this.modal.classList.add('modal-hidden');
+    };
+
+    this.preview.addEventListener('click', this.toFullview.bind(this));
+    // Если я кликаю на миниатюру, то убрать прячущий класс с фулл фото, ссылка на которое в дате миниатюры
+    this.fullview.addEventListener('click', this.openModal.bind(this));
+    this.modal.addEventListener('click', this.closeModal.bind(this));
+
+  }
+}
 
 const galleryItems = [
       { preview: 'img/preview-1.jpg', fullview: 'img/fullview-1.jpg', alt: "alt text 1" },
@@ -12,41 +63,9 @@ const galleryItems = [
       { preview: 'img/preview-6.jpg', fullview: 'img/fullview-6.jpg', alt: "alt text 6" },
     ];
 
-preview.innerHTML = galleryItems.reduce((acc, el) => acc + `<li><img src=${el.preview} data-fullview=${el.fullview} alt=${el.alt}></li>`, '');
-fullview.innerHTML = galleryItems.reduce((acc, el) => acc + `<li class="hidden"><img src=${el.fullview} alt=${el.alt}></li>`, '');
-modalContent.innerHTML = galleryItems.reduce((acc, el) => acc + `<li class="hidden"><img src=${el.fullview} alt=${el.alt}></li>`, '');
-
-fullview.firstChild.classList.add('active');
-modalContent.firstChild.classList.add('active');
-
 // fullview.innerHTML = `<img src=${galleryItems[0].fullview} alt=${galleryItems[0].alt}>`;
 // modalContent.innerHTML = `<img src=${galleryItems[0].fullview} alt=${galleryItems[0].alt}>`;
 
-preview.addEventListener('click', toFullview);
-// Если я кликаю на миниатюру, то убрать прячущий класс с фулл фото, ссылка на которое в дате миниатюры
-
-function toFullview(event) {
-  event.preventDefault();
-  const target = event.target;
-  if(target.nodeName !== "LI" && target.nodeName !== "IMG") return;
-  setActiveImg(target);
-}
-
-function setActiveImg(targetPreviewImg){
-
-  let currentActiveImg = fullview.querySelector('.active');
-  currentActiveImg.classList.remove('active');
-
-  let nextActiveImg = fullview.querySelector(`[src="${targetPreviewImg.dataset.fullview}"]`);
-  nextActiveImg.parentNode.classList.add('active');
-
-  let currentActiveModal = modalContent.querySelector('.active');
-  currentActiveModal.classList.remove('active');
-
-  let nextActiveModal = modalContent.querySelector(`[src="${targetPreviewImg.dataset.fullview}"]`);
-  nextActiveModal.parentNode.classList.add('active');
-
-}
 
 // function toFullview(event) {
 //   event.preventDefault();
@@ -57,15 +76,13 @@ function setActiveImg(targetPreviewImg){
 //   }
 // }
 
-fullview.addEventListener('click', openModal);
-modal.addEventListener('click', closeModal);
+let gallery1 = new Gallery({
+  items: galleryItems,
+  parentNode: document.querySelector('.image-gallery'),
+  defaultActiveItem: 1
+});
 
-function openModal() {
-  modal.classList.remove('modal-hidden');
-}
+const container = document.querySelector('.container');
 
-function closeModal() {
-  // const target = event.target;
-  // if(target !== modal) return;
-  modal.classList.add('modal-hidden');
-}
+container.appendChild(gallery1.parentNode);
+container.firstElementChild.classList.add('hidden');
