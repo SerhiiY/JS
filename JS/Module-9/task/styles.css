@@ -12,6 +12,11 @@ body {
   flex-direction: column;
 }
 
+.timers {
+  display: flex;
+  flex-direction: row;
+}
+
 .timer {
   padding: 30px;
   text-align: center;
@@ -38,6 +43,7 @@ body {
   border-radius: 2px;
   font-family: "Roboto", sans-serif;
   width: 200px;
+  margin-bottom: 10px;
 }
 
 .active {

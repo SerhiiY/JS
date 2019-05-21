@@ -8,9 +8,9 @@ class Gallery {
     this.modalContent = this.parentNode.querySelector('.modal-content');
     this.modal = this.parentNode.querySelector('.js-modal-backdrop');
 
-    this.preview.innerHTML = this.items.reduce((acc, el) => acc + `<li><img src=${el.preview} data-fullview=${el.fullview} alt=${el.alt}></li>`, '');
-    this.fullview.innerHTML = this.items.reduce((acc, el) => acc + `<li class="hidden"><img src=${el.fullview} alt=${el.alt}></li>`, '');
-    this.modalContent.innerHTML = this.items.reduce((acc, el) => acc + `<li class="hidden"><img src=${el.fullview} alt=${el.alt}></li>`, '');
+    this.preview.innerHTML = this.items.reduce((acc, {preview, fullview, alt}) => acc + `<li><img src=${preview} data-fullview=${fullview} alt=${alt}></li>`, '');
+    this.fullview.innerHTML = this.items.reduce((acc, {preview, fullview, alt}) => acc + `<li class="hidden"><img src=${fullview} alt=${alt}></li>`, '');
+    this.modalContent.innerHTML = this.items.reduce((acc, {preview, fullview, alt}) => acc + `<li class="hidden"><img src=${fullview} alt=${alt}></li>`, '');
 
     this.fullview.children[this.defaultActiveItem - 1].classList.add('active');
     this.modalContent.children[this.defaultActiveItem - 1].classList.add('active');
@@ -31,8 +31,7 @@ class Gallery {
 
     this.toFullview = function(event) {
       event.preventDefault();
-      const target = event.target;
-      if(target.nodeName !== "LI" && target.nodeName !== "IMG") return;
+      const target = event.currentTarget;
       this.setActiveImg(target);
     };
 
