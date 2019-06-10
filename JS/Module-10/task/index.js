@@ -1,75 +1,123 @@
-  const timers = document.querySelector('.timers');
-  const timerBody = document.querySelector('.container');
+let   formGetAll = document.querySelector(".get-all"),
+      formGet = document.querySelector(".get-by-id"),
+      formAdd = document.querySelector(".add-user"),
+      formRemove = document.querySelector(".remove-user"),
+      formUpdate = document.querySelector(".update-user"),
+      getUserInput = document.querySelector(".get-user-input"),
+      removeUserInput = document.querySelector(".remove-user-input"),
+      updateUserInput = document.querySelector(".update-user-input"),
+      result = document.querySelector(".result"),
+        API_URL = "https://jsonplaceholder.typicode.com/users/";
 
-function getFormattedTime(time) {
-  let date = new Date(time),
-      minutes = ('0' + date.getMinutes()).slice(-2),
-      seconds = ('0' + date.getSeconds()).slice(-2),
-      milliseconds = Math.floor(date.getMilliseconds()/100);
-  return `${minutes}:${seconds}.${milliseconds}`;
+formGetAll.addEventListener("submit", getAllUsers);
+formGet.addEventListener("submit", getUserById);
+formAdd.addEventListener("submit", addUser);
+formRemove.addEventListener("submit", removeUser);
+formUpdate.addEventListener("submit", updateUser);
+
+function getAllUsers(event) {
+  event.preventDefault();
+  fetch(API_URL)                // Совершить запрос по ссылке
+    .then( response => {                      // Для запроса по ссылке выполнить функцию
+      if(response.ok) return response.json(); // Если ответ по запросу получен, то вернуть результат запроса в json объект
+      throw new Error('Response is not ok!'); // Если ответ не получен (ссылки не существует), то выдать ошибку с текстом
+    })
+    .then( data => {            // Для полученного объекта выполнить функцию
+      result.innerHTML = "";
+      console.log(data);
+      data.forEach(el => { 
+      result.innerHTML += `
+      <div>
+      <p style="width: 50px">${el.id}</p>
+      <p style="width: 250px">${el.name}</p>
+      <p style="width: 250px">${el.phone}</p>
+      </div>
+      `;  // В div с классом result поместим следующие строки зо значениями ключей объекта
+      });
+    })
+    .catch(error => console.error('Your fetch has an error!', error));
 }
 
-class Timer {
-  constructor(parent){
-    this.parent = parent.cloneNode(true);
-    this.clockface = this.parent.querySelector('.js-clockface');
-    this.startBtn = this.parent.querySelector('.js-timer-start');
-    this.clearBtn = this.parent.querySelector('.js-timer-clear');
-    this.lapBtn = this.parent.querySelector('.js-timer-lap');
-    this.laps = this.parent.querySelector('.js-laps');
-    this.time = 0;
-    this.currentTime = 0;
-    timers.appendChild(this.parent);
-    this.startFnBind = this.startFn.bind(this);
-    this.stopFnBind = this.stopFn.bind(this);
-    this.updateClockfaceBind = this.updateClockface.bind(this);
-  }
-
-  updateClockface() {
-    this.clockface.textContent = getFormattedTime(this.time);
-    this.currentTime = this.time;
-    this.time += 100;
-  }
-
-  stopFn() {
-    clearInterval(this.count);
-    this.startBtn.textContent = 'CONTINUE';
-    this.startBtn.removeEventListener('click', this.stopFnBind);
-    this.startBtn.addEventListener('click', this.startFnBind);
-
-  }
-
-  clearFn() {
-    this.stopFn();
-    this.time = 0;
-    this.currentTime = this.time;
-    this.clockface.textContent = getFormattedTime(this.time);
-    this.startBtn.textContent = 'START';
-    this.laps.innerHTML = '';
-  }
-
-  startFn() {
-    this.count = setInterval(this.updateClockfaceBind, 100);
-    this.startBtn.removeEventListener('click', this.startFnBind);
-    this.startBtn.addEventListener('click', this.stopFnBind);
-    this.startBtn.textContent = 'PAUSE';
-  }
-
-  lapFn() {
-    this.laps.innerHTML += `<li>${getFormattedTime(this.currentTime)}</li>`;
-  }
-
-  run() {
-    this.lapBtn.addEventListener('click', this.lapFn.bind(this));
-    this.startBtn.addEventListener('click', this.startFnBind);
-    this.clearBtn.addEventListener('click', this.clearFn.bind(this));
-  }
-
+function getUserById(event) {
+  event.preventDefault();
+  fetch(API_URL + getUserInput.value)                // Совершить запрос по ссылке
+    .then( response => {
+      if(response.ok) return response.json(); // Если ответ по запросу получен, то вернуть результат запроса в json объект
+      throw new Error('Response is not ok!'); // Если ответ не получен (ссылки не существует), то выдать ошибку с текстом
+      result.textContent = "Ошибка! Пользователя с таким id не существует";
+    })
+    .then( el => { 
+      console.log(el);
+      result.innerHTML = `
+      <div>
+      <p style="width: 50px">ID: ${el.id}</p>
+      <p style="width: 250px">Name: ${el.name}</p>
+      <p style="width: 250px">Phone: ${el.phone}</p>
+      </div>
+      `;  // В div с классом result поместим следующие строки зо значениями ключей объекта
+    })
+    .catch(error => console.error('Your fetch has an error!', error));
 }
 
-let timer = new Timer(timerBody);
-timer.run();
-let timer2 = new Timer(timerBody);
-timer2.run();
+const newUser = {
+  name: "Porter Robinson",
+  phone: "000-222-444-333-555",
+  website: "www.clonemyid.com",
+};
 
-document.querySelector('.timers').firstElementChild.classList.add('hidden');
+function addUser(event) {
+  event.preventDefault();
+  fetch(API_URL, {
+    method: 'POST',
+    body: JSON.stringify(newUser),
+    headers: {
+    "Content-Type": "application/json",
+    }
+  })                // Совершить запрос на добавление пользователя в массив по ссылке
+    .then( response => {
+      if(response.ok) return response.json(); // Если ответ по запросу получен, то вернуть результат запроса в json объект
+      throw new Error('Response is not ok!'); // Если ответ не получен (ссылки не существует), то выдать ошибку с текстом
+    })
+    .then( data => { 
+      console.log(data);
+      alert("Пользователь успешно добавлен!");
+    })
+    .catch(error => console.error('Your fetch has an error!', error));
+}
+
+function removeUser(event) {
+  event.preventDefault();
+  fetch(API_URL + removeUserInput.value, {
+    method: 'DELETE',
+  })                // Совершить запрос об удалении пользователя с id "..." из массива по ссылке 
+    .then( response => {
+      if(response.ok) return response.json(); // Если ответ по запросу получен, то вернуть результат запроса в json объект
+      throw new Error('Response is not ok!'); // Если ответ не получен (ссылки не существует), то выдать ошибку с текстом
+      result.textContent = "Ошибка! Пользователя с таким id не существует";
+    })
+    .then( data => {
+      console.log(data);
+      alert("Пользователь успешно удален!");
+    })
+    .catch(error => console.error('Your fetch has an error!', error));
+}
+
+function updateUser(event) {
+  event.preventDefault();
+  fetch(API_URL + updateUserInput.value, {
+    method: 'PUT',
+    body: JSON.stringify(newUser),
+    headers: {
+    "Content-Type": "application/json",
+    }
+  })                // Совершить запрос по ссылке
+    .then( response => {
+      if(response.ok) return response.json(); // Если ответ по запросу получен, то вернуть результат запроса в json объект
+      throw new Error('Response is not ok!'); // Если ответ не получен (ссылки не существует), то выдать ошибку с текстом
+    })
+    .then( data => {
+      console.log(data);
+      alert("Данные пользователя успешно обновлены");
+    })
+    .catch(error => console.error('Your fetch has an error!', error));
+}

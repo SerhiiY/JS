@@ -1,7 +1,7 @@
 const  input = document.querySelector("input"),
        form = document.querySelector(".search-form"),
        result = document.querySelector(".result"),
-       API_URL = "https://api.github.com/users/SerhiiY";
+       API_URL = "https://api.github.com/users/";
 
 form.addEventListener("submit", fetchUserData);
 

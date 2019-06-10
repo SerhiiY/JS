@@ -2,25 +2,61 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Module-9</title>
+    <title>Module-10</title>
     <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript" async="" src="index.js"></script>
   </head>
   <body>
-    <h2>Модуль 9</h2>
+    <h2>Модуль 10</h2>
 
-    <div class="timers">
-      <div class="container">
-        <div class="timer">
-          <p class="clockface js-clockface">00:00.0</p>
-          <button class="timer-btn js-timer-start">Start</button>
-          <button class="timer-btn js-timer-lap">Lap</button>
-          <button class="timer-btn js-timer-clear">Clear</button>
+    <div class="container">
+
+      <div class="forms">
+
+        <div class="form-container first">
+          <h3>Get all users</h3>
+          <form class="search-form get-all">
+            <button class="mdc-btn" type="submit">get</button>
+          </form>
         </div>
-        <ul class="laps js-laps"></ul>
+
+        <div class="form-container">
+          <h3>Get user by id</h3>
+          <form class="search-form get-by-id">
+            <input type="text" class="get-user-input">
+            <button class="mdc-btn" type="submit">get</button>
+          </form>
+        </div>
+
+        <div class="form-container">
+            <h3>Add user</h3>
+          <form class="search-form add-user">
+            <button class="mdc-btn" type="submit">get</button>
+          </form>
+        </div>
+
+        <div class="form-container">
+          <h3>Remove user</h3>
+          <form class="search-form remove-user">
+            <input type="text" class="remove-user-input">
+            <button class="mdc-btn" type="submit">get</button>
+          </form>
+        </div>
+
+        <div class="form-container">
+          <h3>Update user</h3>
+          <form class="search-form update-user">
+            <input type="text" class="update-user-input">
+            <button class="mdc-btn" type="submit">get</button>
+          </form>
+        </div>
+
       </div>
+
+      <table class="result"></table>
+
     </div>
 
     <a href="../index.html">Назад</a>
-    <script type="text/javascript" async="" src="index.js"></script>
   </body>
 </html>
