@@ -30,9 +30,10 @@ class Gallery {
     };
 
     this.toFullview = function(event) {
-      event.preventDefault();
-      const target = event.currentTarget;
-      this.setActiveImg(target);
+        event.preventDefault();
+        const target = event.target;
+        if(target.nodeName !== "IMG") return;
+        this.setActiveImg(target);
     };
 
     this.openModal = function() {
