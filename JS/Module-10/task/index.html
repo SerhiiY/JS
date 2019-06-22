@@ -1,62 +1,69 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Module-10</title>
-    <link rel="stylesheet" href="styles.css">
-    <script type="text/javascript" async="" src="index.js"></script>
-  </head>
-  <body>
-    <h2>Модуль 10</h2>
+    <head>
+        <meta charset="utf-8">
+        <title>Module-10</title>
+        <link rel="stylesheet" href="styles.css">
+        <script type="text/javascript" async="" src="index.js"></script>
+    </head>
+    <body>
+        <h2>Модуль 10</h2>
 
-    <div class="container">
+        <div class="container">
 
-      <div class="forms">
+        <div class="forms">
 
-        <div class="form-container first">
-          <h3>Get all users</h3>
-          <form class="search-form get-all">
-            <button class="mdc-btn" type="submit">get</button>
-          </form>
+            <div class="form-container first">
+                <h3>Get all users</h3>
+                <form class="search-form get-all">
+                    <button class="mdc-btn" type="submit">Get all users</button>
+                </form>
+            </div>
+
+            <div class="form-container">
+                <h3>Get user by id</h3>
+                <form class="search-form get-by-id">
+                    <input type="text" class="get-user-input" placeholder="ID">
+                    <button class="mdc-btn" type="submit">Get user by id</button>
+                </form>
+            </div>
+
+            <div class="form-container">
+                <h3>Add user</h3>
+                <form class="search-form add-user">
+                    <button class="mdc-btn" type="submit">Add new user</button>
+                </form>
+                <input type="text" class="new-user-name" placeholder="Enter user name">
+                <input type="text" class="new-user-phone" placeholder="Enter user phone">
+                <input type="text" class="new-user-website" placeholder="Enter user website">          
+            </div>
+
+            <div class="form-container">
+                <h3>Remove user by id</h3>
+                <form class="search-form remove-user">
+                    <input type="text" class="remove-user-input" placeholder="ID">
+                    <button class="mdc-btn" type="submit">Remove user by id</button>
+                </form>
+            </div>
+
+            <div class="form-container">
+                <h3>Update user</h3>
+                <form class="search-form update-user">
+                    <input type="text" class="update-user-input" placeholder="ID">
+                    <button class="mdc-btn" type="submit">Update user</button>
+                </form>
+                <input type="text" class="update-user-name" placeholder="Enter user name">
+                <input type="text" class="update-user-phone" placeholder="Enter user phone">
+                <input type="text" class="update-user-website" placeholder="Enter user website">          
+
+            </div>
+
         </div>
 
-        <div class="form-container">
-          <h3>Get user by id</h3>
-          <form class="search-form get-by-id">
-            <input type="text" class="get-user-input">
-            <button class="mdc-btn" type="submit">get</button>
-          </form>
+            <table class="result"></table>
+
         </div>
 
-        <div class="form-container">
-            <h3>Add user</h3>
-          <form class="search-form add-user">
-            <button class="mdc-btn" type="submit">get</button>
-          </form>
-        </div>
-
-        <div class="form-container">
-          <h3>Remove user</h3>
-          <form class="search-form remove-user">
-            <input type="text" class="remove-user-input">
-            <button class="mdc-btn" type="submit">get</button>
-          </form>
-        </div>
-
-        <div class="form-container">
-          <h3>Update user</h3>
-          <form class="search-form update-user">
-            <input type="text" class="update-user-input">
-            <button class="mdc-btn" type="submit">get</button>
-          </form>
-        </div>
-
-      </div>
-
-      <table class="result"></table>
-
-    </div>
-
-    <a href="../index.html">Назад</a>
-  </body>
+        <a href="../index.html">Назад</a>
+     </body>
 </html>

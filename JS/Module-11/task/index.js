@@ -166,3 +166,11 @@ function filterFn(event) { // Общая функция для фитрации 
   let resultNew = template(laptopsNew);
   list.innerHTML = resultNew;
 } 
+
+reset.addEventListener('click', resetFn);
+
+function resetFn () {
+    laptopsNew.forEach(el => el.favorite = true);
+    let resultNew = template(laptopsNew);
+    list.innerHTML = resultNew;
+}

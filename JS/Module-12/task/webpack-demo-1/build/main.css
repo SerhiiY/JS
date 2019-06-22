@@ -13,3 +13,17 @@ body {
     flex-direction: column;
     justify-items: flex-start;
 }
+
+li {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    height: 20px;
+    padding: 0;
+}
+
+p {
+    margin: 0;
+    padding-left: 10px;
+    overflow: hidden;
+}

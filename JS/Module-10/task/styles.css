@@ -39,8 +39,8 @@ body {
 }
 
 .mdc-btn {
-  min-width: 88px;
-  height: 36px;
+  min-width: 100px;
+  height: 40px;
   border: 0;
   outline: 0;
   border-radius: 2px;
@@ -51,12 +51,6 @@ body {
   background-color: #00796b;
   cursor: pointer;
   box-shadow: 0 4px 4px 0 rgba(#414141, 0.3);
-  &:hover {
-    background-color: #004c40;
-  }
-  &:active {
-    box-shadow: 0 6px 4px 0 rgba(#414141, 0.3);
-  }
 }
 
 .search-form {
@@ -80,15 +74,14 @@ body {
   background-color: transparent;
   border-bottom: 2px solid #00796b;
   width: 50%;
-  &::placeholder {
-    color: #616161;
-  }
+  min-width: 30px;
 }
 
 .result {
   display: flex;
   flex-direction: column;
   margin: 0 100px;
+  margin-top: 30px;
 }
 
 .result div {

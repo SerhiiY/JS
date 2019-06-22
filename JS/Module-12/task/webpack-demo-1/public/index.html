@@ -8,12 +8,12 @@
 </head>
 <body>
     <h1>Задание 12</h1>
-    <h2>(без проверки на валидность ссылки)</h2>
+    <h2>(С проверкой ссылки на валидность)</h2>
     <template id="url-card">
         {{#each this}}
             <li class="url-list-elem">
-                <p class="url">{{url}}</p>
                 <button class="url-remove-btn">Remove</button>
+                <p class="url">{{url}}</p>
             </li>
         {{/each}}
     </template>
