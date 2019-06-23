@@ -8,15 +8,13 @@ let formGetAll = document.querySelector(".get-all"),
     updateUserInput = document.querySelector(".update-user-input"),
 
     newUserName = document.querySelector('.new-user-name'),
-    newUserPhone = document.querySelector('.new-user-phone'),
-    newUserWebsite = document.querySelector('.new-user-website'),
+    newUserAge = document.querySelector('.new-user-age'),
 
     updateUserName = document.querySelector('.update-user-name'),
-    updateUserPhone = document.querySelector('.update-user-phone'),
-    updateUserWebsite = document.querySelector('.update-user-website'),
+    updateUserAge = document.querySelector('.update-user-age'),
 
     result = document.querySelector(".result"),
-    API_URL = "https://jsonplaceholder.typicode.com/users/";
+    API_URL = "https://test-users-api.herokuapp.com/users/";
 
 formGetAll.addEventListener("submit", getAllUsers);
 formGet.addEventListener("submit", getUserById);
@@ -32,15 +30,14 @@ function getAllUsers(event) {
         result.innerHTML = "";             
         throw new Error('Response is not ok!'); // Если ответ не получен (ссылки не существует), то выдать ошибку с текстом
     })
-    .then( data => {            // Для полученного объекта выполнить функцию
+    .then( el => {            // Для полученного объекта выполнить функцию
         result.innerHTML = "";
-        console.log(data);
-        data.forEach(el => { 
+        el.data.forEach(el => { 
             result.innerHTML += `
             <div>
-            <p style="width: 50px">${el.id}</p>
-            <p style="width: 250px">${el.name}</p>
-            <p style="width: 250px">${el.phone}</p>
+            <p style="min-width: 250px">ID: ${el.id}</p>
+            <p style="min-width: 200px">Name: ${el.name}</p>
+            <p style="min-width: 50px">Age: ${el.age}</p>
             </div>
             `;  // В div с классом result поместим следующие строки зо значениями ключей объекта
         });
@@ -54,23 +51,22 @@ function getUserById(event) {
     .then( response => {
         if(response.ok) return response.json(); // Если ответ по запросу получен, то вернуть результат запроса в json объект
         result.innerHTML = "";     
-        alert("Ошибка! Пользователя с таким id не существует");        
         throw new Error('Response is not ok!'); // Если ответ не получен (ссылки не существует), то выдать ошибку с текстом
         })
     .then( el => { 
-        if(el.id != undefined){
+        if(el.data.id !== "undefined"){
             result.innerHTML = `
             <div>
-            <p style="width: 50px">ID: ${el.id}</p>
-            <p style="width: 250px">Name: ${el.name}</p>
-            <p style="width: 250px">Phone: ${el.phone}</p>
+            <p style="min-width: 250px">ID: ${el.data.id}</p>
+            <p style="min-width: 200px">Name: ${el.data.name}</p>
+            <p style="min-width: 50px">Age: ${el.data.age}</p>
             </div>
             `;  // В div с классом result поместим следующие строки зо значениями ключей объекта
         }else{
             alert('Такого пользователя не существует!')
         }
     })
-    .catch(error => console.error('Your fetch has an error!', error));
+    .catch(error => console.error('Your fetch has an error!', error, alert("Ошибка! Пользователя с таким id не существует")));
 }
 
 
@@ -78,8 +74,7 @@ function addUser(event) {
     event.preventDefault();
     let newUser = {
     name: newUserName.value,
-    phone: newUserPhone.value,
-    website: newUserWebsite.value,
+    age: newUserAge.value,
 };
     fetch(API_URL, {
         method: 'POST',
@@ -93,15 +88,8 @@ function addUser(event) {
         result.innerHTML = "";     
         throw new Error('Response is not ok!'); // Если ответ не получен (ссылки не существует), то выдать ошибку с текстом
     })
-    .then( data => { 
-        result.innerHTML = `
-            <div>
-                <p style="width: 50px">ID: ${data.id}</p>
-                <p style="min-width: 150px">Name: ${data.name}</p>
-                <p style="min-width: 150px">Phone: ${data.phone}</p>
-                <p style="min-width: 150px">Website: ${data.website}</p>
-            </div>
-        `;
+    .then( () => { 
+        alert("Пользователь успешно добавлен!");
     })
     .catch(error => console.error('Your fetch has an error!', error));
 }
@@ -128,8 +116,7 @@ function updateUser(event) {
     event.preventDefault();
     let newUser = {
         name: updateUserName.value,
-        phone: updateUserPhone.value,
-        website: updateUserWebsite.value,
+        age: updateUserAge.value,
     };
     fetch(API_URL + updateUserInput.value, {
         method: 'PUT',
@@ -144,15 +131,7 @@ function updateUser(event) {
         alert("Ошибка! Пользователя с таким id не существует");
         throw new Error('Response is not ok!'); // Если ответ не получен (ссылки не существует), то выдать ошибку с текстом
     })
-    .then( data => {
-        result.innerHTML = `
-            <div>
-                <p style="width: 50px">ID: ${data.id}</p>
-                <p style="min-width: 150px">Name: ${data.name}</p>
-                <p style="min-width: 150px">Phone: ${data.phone}</p>
-                <p style="min-width: 150px">Website: ${data.website}</p>
-            </div>
-        `;
+    .then( () => {
         alert("Данные пользователя успешно обновлены");
     })
     .catch(error => console.error('Your fetch has an error!', error));
