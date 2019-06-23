@@ -27,7 +27,7 @@ function getAllUsers(event) {
     fetch(API_URL)                // Совершить запрос по ссылке
     .then( response => {                      // Для запроса по ссылке выполнить функцию
         if(response.ok) return response.json(); // Если ответ по запросу получен, то вернуть результат запроса в json объект
-        result.innerHTML = "";             
+        clearInputs();        
         throw new Error('Response is not ok!'); // Если ответ не получен (ссылки не существует), то выдать ошибку с текстом
     })
     .then( el => {            // Для полученного объекта выполнить функцию
@@ -50,7 +50,7 @@ function getUserById(event) {
     fetch(API_URL + getUserInput.value)                // Совершить запрос по ссылке
     .then( response => {
         if(response.ok) return response.json(); // Если ответ по запросу получен, то вернуть результат запроса в json объект
-        result.innerHTML = "";     
+        clearInputs();
         throw new Error('Response is not ok!'); // Если ответ не получен (ссылки не существует), то выдать ошибку с текстом
         })
     .then( el => { 
@@ -85,10 +85,11 @@ function addUser(event) {
     })                // Совершить запрос на добавление пользователя в массив по ссылке
     .then( response => {
         if(response.ok) return response.json(); // Если ответ по запросу получен, то вернуть результат запроса в json объект
-        result.innerHTML = "";     
+        clearInputs();
         throw new Error('Response is not ok!'); // Если ответ не получен (ссылки не существует), то выдать ошибку с текстом
     })
-    .then( () => { 
+    .then( () => {
+        clearInputs();
         alert("Пользователь успешно добавлен!");
     })
     .catch(error => console.error('Your fetch has an error!', error));
@@ -101,12 +102,12 @@ function removeUser(event) {
     })                // Совершить запрос об удалении пользователя с id "..." из массива по ссылке 
     .then( response => {
         if(response.ok) return response.json(); // Если ответ по запросу получен, то вернуть результат запроса в json объект
-        result.innerHTML = "";     
+        clearInputs();        
         alert("Ошибка! Пользователя с таким id не существует");
         throw new Error('Response is not ok!'); // Если ответ не получен (ссылки не существует), то выдать ошибку с текстом
     })
     .then( () => {
-        result.innerHTML = "";     
+        clearInputs();
         alert("Пользователь успешно удален!");
     })
     .catch(error => console.error('Your fetch has an error!', error));
@@ -127,12 +128,21 @@ function updateUser(event) {
     })                // Совершить запрос по ссылке
     .then( response => {
         if(response.ok) return response.json(); // Если ответ по запросу получен, то вернуть результат запроса в json объект
-        result.innerHTML = "";             
+        clearInputs();
         alert("Ошибка! Пользователя с таким id не существует");
         throw new Error('Response is not ok!'); // Если ответ не получен (ссылки не существует), то выдать ошибку с текстом
     })
     .then( () => {
+        clearInputs();
         alert("Данные пользователя успешно обновлены");
     })
     .catch(error => console.error('Your fetch has an error!', error));
+}
+
+function clearInputs () {
+    result.innerHTML = "";
+    newUserName.value = "";
+    newUserAge.value = "";
+    updateUserName.value = "";
+    updateUserAge.value = "";
 }
