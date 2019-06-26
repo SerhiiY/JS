@@ -1,0 +1,29 @@
+body {
+    background-color: #fac6c6;
+  }
+
+.url-add-form {
+    display: block;
+    margin: auto;
+    margin-top: 50px;
+}
+
+.url-list {
+    display: flex;
+    flex-direction: column;
+    justify-items: flex-start;
+}
+
+li {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    height: 20px;
+    padding: 0;
+}
+
+p {
+    margin: 0;
+    padding-left: 10px;
+    overflow: hidden;
+}
